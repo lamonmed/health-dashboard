@@ -1,1 +1,992 @@
-<!-- placeholder -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matt's Health Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:        #080f2a;
+  --sidebar:   #060c20;
+  --surface:   #0d1740;
+  --surface2:  #111d4a;
+  --border:    rgba(255,255,255,0.07);
+  --text:      #e8edf8;
+  --muted:     #5a6a9a;
+  --accent:    #4f8ef7;
+  --teal:      #22d3ee;
+  --purple:    #a78bfa;
+  --green:     #34d399;
+  --yellow:    #fbbf24;
+  --red:       #fb7185;
+  --pink:      #f472b6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+}
+.sidebar-logo {
+  padding: 24px 20px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-dot {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--accent), var(--teal));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.sidebar-nav { padding: 16px 12px; flex: 1; }
+.nav-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 8px;
+  margin: 16px 0 6px;
+}
+.nav-section-label:first-child { margin-top: 0; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: default;
+  margin-bottom: 2px;
+  transition: all 0.15s;
+}
+.nav-item.active {
+  background: rgba(79,142,247,0.12);
+  color: var(--accent);
+}
+.nav-item .icon { font-size: 14px; width: 18px; text-align: center; }
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+}
+.sidebar-footer strong { color: var(--text); display: block; margin-bottom: 2px; font-size: 13px; }
+
+/* ── Main ── */
+.main {
+  margin-left: 220px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Topbar ── */
+.topbar {
+  background: rgba(8,15,42,0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar-title h1 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.topbar-title .sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.days-pill {
+  background: rgba(79,142,247,0.1);
+  border: 1px solid rgba(79,142,247,0.25);
+  border-radius: 99px;
+  padding: 5px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.days-pill .num {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+.days-pill .lbl { font-size: 11px; color: var(--muted); }
+
+/* ── Content ── */
+.content { padding: 24px 28px; flex: 1; }
+
+/* ── Stat Cards ── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.stat-card {
+  border-radius: 14px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: 14px 14px 0 0;
+}
+.sc-blue   { background: linear-gradient(145deg, #0d1e55, #091440); }
+.sc-blue::before   { background: linear-gradient(90deg, var(--accent), var(--teal)); }
+.sc-teal   { background: linear-gradient(145deg, #052e3c, #071e30); }
+.sc-teal::before   { background: linear-gradient(90deg, var(--teal), #67e8f9); }
+.sc-purple { background: linear-gradient(145deg, #1a0e3a, #120b2e); }
+.sc-purple::before { background: linear-gradient(90deg, var(--purple), var(--pink)); }
+.sc-green  { background: linear-gradient(145deg, #052e20, #071e18); }
+.sc-green::before  { background: linear-gradient(90deg, var(--green), #6ee7b7); }
+
+.sc-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+.sc-blue .sc-icon   { background: rgba(79,142,247,0.15); }
+.sc-teal .sc-icon   { background: rgba(34,211,238,0.12); }
+.sc-purple .sc-icon { background: rgba(167,139,250,0.12); }
+.sc-green .sc-icon  { background: rgba(52,211,153,0.12); }
+
+.sc-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.sc-value { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+.sc-blue .sc-value   { color: var(--accent); }
+.sc-teal .sc-value   { color: var(--teal); }
+.sc-purple .sc-value { color: var(--purple); }
+.sc-green .sc-value  { color: var(--green); }
+
+.sc-bar-bg { height: 3px; background: rgba(255,255,255,0.06); border-radius: 99px; margin: 6px 0 5px; overflow: hidden; }
+.sc-bar-fill { height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+.sc-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+.sc-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.sc-blue .sc-badge   { background: rgba(79,142,247,0.12); color: var(--accent); }
+.sc-teal .sc-badge   { background: rgba(34,211,238,0.1); color: var(--teal); }
+.sc-purple .sc-badge { background: rgba(167,139,250,0.1); color: var(--purple); }
+.sc-green .sc-badge  { background: rgba(52,211,153,0.1); color: var(--green); }
+
+/* ── Row layout ── */
+.row { display: grid; gap: 14px; margin-bottom: 20px; }
+.row-2-1 { grid-template-columns: 2fr 1fr; }
+.row-2   { grid-template-columns: 1fr 1fr; }
+.row-3   { grid-template-columns: repeat(3, 1fr); }
+
+/* ── Panel ── */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+}
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.panel-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.panel-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.panel-badge {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  background: rgba(255,255,255,0.05);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* ── Chart ── */
+.chart-wrap { position: relative; height: 220px; }
+
+/* ── Table ── */
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding: 0 0 10px;
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 9px 0;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+
+/* ── Lab rows ── */
+.lab-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.lab-row:last-child { border-bottom: none; }
+.lab-name { font-size: 12px; color: var(--muted); }
+.lab-val  { font-size: 12px; font-weight: 600; }
+
+/* ── Workout items ── */
+.workout-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.workout-item:last-child { border-bottom: none; }
+.workout-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.workout-type { font-size: 12px; font-weight: 600; }
+.workout-meta { font-size: 11px; color: var(--muted); }
+
+/* ── Metric row (side panel) ── */
+.metric-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.metric-row:last-child { border-bottom: none; }
+.metric-label { font-size: 12px; color: var(--muted); }
+.metric-val { font-size: 13px; font-weight: 600; }
+
+/* ── Badge ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.badge-green  { background: rgba(52,211,153,0.1);  color: var(--green);  border: 1px solid rgba(52,211,153,0.2); }
+.badge-yellow { background: rgba(251,191,36,0.1);  color: var(--yellow); border: 1px solid rgba(251,191,36,0.2); }
+.badge-red    { background: rgba(251,113,133,0.1); color: var(--red);    border: 1px solid rgba(251,113,133,0.2); }
+.badge-blue   { background: rgba(79,142,247,0.1);  color: var(--accent); border: 1px solid rgba(79,142,247,0.2); }
+
+/* ── Empty ── */
+.empty { color: var(--muted); font-size: 12px; padding: 12px 0; }
+
+/* ── Divider ── */
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+/* ── Secondary goals list ── */
+.goal-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 12px;
+  color: var(--muted);
+}
+.goal-chip:last-child { border-bottom: none; }
+.goal-chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+
+@media (max-width: 1100px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .row-2-1, .row-3 { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .row-2 { grid-template-columns: 1fr; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ DATA ═══════════════════ -->
+<!-- UPDATE THIS BLOCK WHEN LOGGING NEW DATA -->
+<script>
+const DATA = {
+  profile: { name: "Matt", goalDate: "2026-12-31" },
+  goals: {
+    weight_lbs:    { start: 234.5, target: 190 },
+    waist_inches:  { start: 43,  target: 37  },
+    vat_kg:        { target: 1.0 },
+    protein_g_min: 160,
+    protein_g_max: 220
+  },
+  bodyComposition: [
+    { date: "2025-03-11", weight_lbs: 230.1, waist_inches: null, body_fat_pct: 31.9, lean_mass_lbs: 149.1, notes: "BodySpec DEXA" },
+    { date: "2026-01-01", weight_lbs: 234.5, waist_inches: 43,   body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-01-06", weight_lbs: 230.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-01-10", weight_lbs: 231.2, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-01-29", weight_lbs: 229.0, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-02-01", weight_lbs: 229.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-02-02", weight_lbs: 229.3, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-02-05", weight_lbs: 227.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-02-13", weight_lbs: 224.7, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-02-17", weight_lbs: 224.2, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-02-20", weight_lbs: 222.3, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-02-21", weight_lbs: 222.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-01", weight_lbs: 221.6, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-02", weight_lbs: 221.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-03", weight_lbs: 218.7, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-05", weight_lbs: 220.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-06", weight_lbs: 222.6, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-09", weight_lbs: 220.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-11", weight_lbs: 221.1, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-15", weight_lbs: 219.3, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-18", weight_lbs: 211.4, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-25", weight_lbs: 221.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-03-29", weight_lbs: 220.2, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-04-02", weight_lbs: 216.7, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-04-19", weight_lbs: 214.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-04-25", weight_lbs: 219.0, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-04-28", weight_lbs: 214.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-05-17", weight_lbs: 213.7, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-05-19", weight_lbs: 213.1, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-05-28", weight_lbs: 213.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-06-02", weight_lbs: 208.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-06-09", weight_lbs: 214.3, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-06-16", weight_lbs: 216.1, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
+    { date: "2026-06-22", weight_lbs: 213.5, waist_inches: 40,   body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" }
+  ],
+  dexa: [
+    { date: "2025-03-11", weight_lbs: 230.1, body_fat_pct: 31.9, lean_mass_lbs: 149.1, fat_mass_lbs: 73.3, vat_kg: 2.07, rmr_cal: 1814, notes: "BodySpec baseline scan" }
+  ],
+  nutrition: [
+    // { date: "2026-06-23", calories: null, protein_g: null, notes: "" }
+  ],
+  workouts: [
+    // { date: "2026-06-23", type: "Strength", details: "Upper body", duration_min: 45, notes: "" }
+  ],
+  labs: [
+    {
+      date: "2024-06-28",
+      total_cholesterol_mgdl: 235,
+      ldl_mgdl: 164,
+      non_hdl_mgdl: 201,
+      hdl_mgdl: 34,
+      triglycerides_mgdl: 221,
+      apob_mgdl: null,
+      lpa_nmol: 142,
+      hscrp_mgl: null,
+      testosterone_ng_dl: 337,
+      glucose_mgdl: 92,
+      alt_ul: 49,
+      ast_ul: 30,
+      psa_ngml: 0.82,
+      notes: "Quest Diagnostics — ApoB & hsCRP not ordered"
+    }
+  ],
+  rhr: []
+};
+</script>
+<!-- ═══════════════════ END DATA ═══════════════════ -->
+
+<script>
+// ── Helpers ─────────────────────────────────────────────────────────────────
+function daysUntil(dateStr) {
+  const now = new Date(); now.setHours(0,0,0,0);
+  return Math.max(0, Math.round((new Date(dateStr) - now) / 86400000));
+}
+function pct(current, start, target) {
+  const p = ((start - current) / (start - target)) * 100;
+  return Math.min(100, Math.max(0, p));
+}
+function latest(arr, field) {
+  const f = arr.filter(r => r[field] != null);
+  return f.length ? f[f.length - 1][field] : null;
+}
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+}
+function fmtDateShort(d) {
+  if (!d) return '—';
+  return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric' });
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const g  = DATA.goals;
+  const bc = DATA.bodyComposition;
+
+  const curWeight   = latest(bc, 'weight_lbs')   ?? g.weight_lbs.start;
+  const curWaist    = latest(bc, 'waist_inches')  ?? g.waist_inches.start;
+  const curBodyFat  = latest(bc, 'body_fat_pct');
+  const curLeanMass = latest(bc, 'lean_mass_lbs');
+  const curVAT      = latest(DATA.dexa, 'vat_kg');
+  const baselineVAT = DATA.dexa.length ? DATA.dexa[0].vat_kg : 2.0;
+  const curRHR      = latest(DATA.rhr, 'bpm');
+  const curRMR      = latest(DATA.dexa, 'rmr_cal');
+
+  const wtPct    = pct(curWeight, g.weight_lbs.start, g.weight_lbs.target);
+  const waistPct = pct(curWaist, g.waist_inches.start, g.waist_inches.target);
+  const vatPct   = curVAT != null ? pct(curVAT, baselineVAT, g.vat_kg.target) : 0;
+  const days     = daysUntil(DATA.profile.goalDate);
+
+  // Topbar
+  document.getElementById('days-num').textContent = days;
+  document.getElementById('goal-date').textContent =
+    new Date(DATA.profile.goalDate + 'T00:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('today-date').textContent =
+    new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+  // Weight card
+  const wtLost = (g.weight_lbs.start - curWeight).toFixed(1);
+  const wtLeft = (curWeight - g.weight_lbs.target).toFixed(1);
+  document.getElementById('wt-val').textContent    = curWeight + ' lb';
+  document.getElementById('wt-badge').textContent  = `↓ ${wtLost} lb lost`;
+  document.getElementById('wt-togo').textContent   = `${wtLeft} lb to go`;
+  document.getElementById('wt-bar').style.width    = wtPct + '%';
+  document.getElementById('wt-pct').textContent    = Math.round(wtPct) + '%';
+
+  // Waist card
+  const waistLost = (g.waist_inches.start - curWaist).toFixed(1);
+  const waistLeft = (curWaist - g.waist_inches.target).toFixed(1);
+  document.getElementById('waist-val').textContent   = curWaist + '"';
+  document.getElementById('waist-badge').textContent = `↓ ${waistLost}" reduced`;
+  document.getElementById('waist-togo').textContent  = `${waistLeft}" to goal`;
+  document.getElementById('waist-bar').style.width   = waistPct + '%';
+  document.getElementById('waist-pct').textContent   = Math.round(waistPct) + '%';
+
+  // VAT card
+  if (curVAT != null) {
+    document.getElementById('vat-val').textContent   = curVAT.toFixed(2) + ' kg';
+    document.getElementById('vat-badge').textContent = curVAT < 1.0 ? '✓ At goal' : `${(curVAT - 1.0).toFixed(2)} kg above target`;
+    document.getElementById('vat-bar').style.width   = vatPct + '%';
+    document.getElementById('vat-pct').textContent   = Math.round(vatPct) + '% progress';
+  } else {
+    document.getElementById('vat-val').textContent   = '— kg';
+    document.getElementById('vat-badge').textContent = 'DEXA needed';
+    document.getElementById('vat-pct').textContent   = 'No data';
+  }
+
+  // Lean mass card
+  document.getElementById('lean-val').textContent   = curLeanMass ? curLeanMass + ' lb' : '— lb';
+  document.getElementById('lean-badge').textContent = curLeanMass ? 'From DEXA' : 'DEXA needed';
+  document.getElementById('lean-bf').textContent    = curBodyFat ? curBodyFat.toFixed(1) + '%' : '—';
+
+  // Side panel metrics
+  if (curRHR)  document.getElementById('rhr-val').textContent = curRHR + ' bpm';
+  if (curRMR)  document.getElementById('rmr-val').textContent = curRMR.toLocaleString() + ' cal/day';
+  if (curBodyFat) document.getElementById('bf-val').textContent = curBodyFat.toFixed(1) + '%';
+
+  buildWeightChart();
+  buildNutrition();
+  buildWorkouts();
+  buildLabs();
+  buildDexa();
+});
+
+// ── Weight Chart ──────────────────────────────────────────────────────────────
+function movingAvg(data, window) {
+  return data.map((_, i) => {
+    const slice = data.slice(Math.max(0, i - window + 1), i + 1).filter(v => v != null);
+    return slice.length ? +(slice.reduce((a,b) => a+b, 0) / slice.length).toFixed(1) : null;
+  });
+}
+
+function buildWeightChart() {
+  const bc = DATA.bodyComposition;
+  if (!bc.length) return;
+  const ctx = document.getElementById('weightChart').getContext('2d');
+
+  const weights = bc.map(r => r.weight_lbs);
+  const avg7 = movingAvg(weights, 5); // 5-point rolling avg (sparse data)
+
+  const gradientFill = ctx.createLinearGradient(0, 0, 0, 220);
+  gradientFill.addColorStop(0, 'rgba(79,142,247,0.18)');
+  gradientFill.addColorStop(1, 'rgba(79,142,247,0.00)');
+
+  // Show month labels only (skip redundant date labels)
+  const labels = bc.map(r => fmtDateShort(r.date));
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Daily weight',
+          data: weights,
+          borderColor: 'rgba(79,142,247,0.4)',
+          backgroundColor: gradientFill,
+          borderWidth: 1.5,
+          pointBackgroundColor: 'rgba(79,142,247,0.7)',
+          pointBorderColor: 'transparent',
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          tension: 0.2,
+          fill: true,
+          order: 2,
+        },
+        {
+          label: 'Trend (5-pt avg)',
+          data: avg7,
+          borderColor: '#4f8ef7',
+          backgroundColor: 'transparent',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          tension: 0.4,
+          fill: false,
+          order: 1,
+        },
+        {
+          label: 'Goal (190 lb)',
+          data: bc.map(() => DATA.goals.weight_lbs.target),
+          borderColor: 'rgba(52,211,153,0.45)',
+          borderDash: [5, 4],
+          borderWidth: 1.5,
+          pointRadius: 0,
+          fill: false,
+          order: 3,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: '#5a6a9a', font: { size: 11 }, boxWidth: 10, padding: 16,
+          filter: item => item.text !== 'Daily weight' } // hide raw dot from legend
+        },
+        tooltip: {
+          backgroundColor: '#0d1740',
+          borderColor: 'rgba(255,255,255,0.1)',
+          borderWidth: 1,
+          titleColor: '#e8edf8',
+          bodyColor: '#5a6a9a',
+          padding: 10,
+          cornerRadius: 8,
+          callbacks: {
+            label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + ' lb'
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#5a6a9a',
+            font: { size: 10 },
+            maxTicksLimit: 8,
+            maxRotation: 0,
+          },
+          grid: { color: 'rgba(255,255,255,0.04)' }
+        },
+        y: {
+          ticks: { color: '#5a6a9a', font: { size: 11 } },
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          min: Math.min(185, ...weights.filter(Boolean)) - 2,
+          max: Math.max(...weights.filter(Boolean)) + 3,
+        }
+      }
+    }
+  });
+}
+
+// ── Nutrition ──────────────────────────────────────────────────────────────
+function buildNutrition() {
+  const n = DATA.nutrition;
+  const g = DATA.goals;
+  const el = document.getElementById('nutrition-content');
+  if (!n.length) {
+    el.innerHTML = '<p class="empty">No entries yet — tell Claude to log protein and calories.</p>';
+    return;
+  }
+  const recent = n.slice(-7).reverse();
+  const rows = recent.map(r => {
+    const ok  = r.protein_g >= g.protein_g_min;
+    const cls = r.protein_g == null ? '' : ok ? 'badge-green' : 'badge-red';
+    const proDisp = r.protein_g != null
+      ? `<span class="badge ${cls}">${r.protein_g}g</span>`
+      : '<span style="color:var(--muted)">—</span>';
+    return `<tr>
+      <td>${fmtDateShort(r.date)}</td>
+      <td>${r.calories != null ? r.calories + ' kcal' : '—'}</td>
+      <td>${proDisp}</td>
+      <td style="color:var(--muted)">${r.notes || ''}</td>
+    </tr>`;
+  }).join('');
+
+  const withPro = n.filter(r => r.protein_g != null);
+  const avgPro  = withPro.length ? Math.round(withPro.reduce((a,b) => a+b.protein_g,0)/withPro.length) : null;
+  const withCal = n.filter(r => r.calories != null);
+  const avgCal  = withCal.length ? Math.round(withCal.reduce((a,b) => a+b.calories,0)/withCal.length) : null;
+
+  el.innerHTML = `
+    <div style="display:flex;gap:24px;margin-bottom:16px">
+      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">Avg Protein</div>
+           <div style="font-size:20px;font-weight:700;color:${avgPro!=null&&avgPro>=g.protein_g_min?'var(--green)':'var(--red)'}">${avgPro!=null?avgPro+'g':'—'}</div></div>
+      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">Target</div>
+           <div style="font-size:20px;font-weight:700">≥${g.protein_g_min}g</div></div>
+      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">Avg Calories</div>
+           <div style="font-size:20px;font-weight:700">${avgCal!=null?avgCal+' kcal':'—'}</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Date</th><th>Calories</th><th>Protein</th><th>Notes</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+// ── Workouts ──────────────────────────────────────────────────────────────
+function buildWorkouts() {
+  const w = DATA.workouts;
+  const el = document.getElementById('workout-content');
+  if (!w.length) {
+    el.innerHTML = '<p class="empty">No sessions logged yet — tell Claude to log a workout.</p>';
+    return;
+  }
+  const colors = { Strength:'var(--accent)', Cardio:'var(--green)', Cycling:'var(--teal)', Walking:'var(--yellow)', HIIT:'var(--red)' };
+  const now = new Date();
+  const thisWeek = w.filter(s => (now - new Date(s.date+'T00:00:00')) < 7*86400000).length;
+  const rows = w.slice(-5).reverse().map(s => `
+    <div class="workout-item">
+      <div class="workout-dot" style="background:${colors[s.type]||'var(--purple)'}"></div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="workout-type">${s.type}</span>
+          ${s.duration_min ? `<span class="badge badge-blue">${s.duration_min} min</span>` : ''}
+        </div>
+        <div class="workout-meta">${fmtDateShort(s.date)}${s.details?' · '+s.details:''}</div>
+      </div>
+    </div>`).join('');
+
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      <div><span style="font-size:28px;font-weight:700;color:var(--accent)">${thisWeek}</span>
+           <span style="font-size:11px;color:var(--muted);margin-left:4px">this week</span></div>
+      <div style="flex:1;border-left:1px solid var(--border);padding-left:12px;font-size:12px;color:var(--muted)">${w.length} total sessions</div>
+    </div>${rows}`;
+}
+
+// ── DEXA ──────────────────────────────────────────────────────────────────
+function buildDexa() {
+  const dexa = DATA.dexa;
+  const el = document.getElementById('dexa-content');
+  if (!dexa.length) {
+    el.innerHTML = '<p class="empty">No DEXA scans logged. DEXA provides VAT, lean mass, and body fat %.</p>';
+    return;
+  }
+  const fields = [
+    { key:'weight_lbs',    label:'Weight',    unit:'lb'      },
+    { key:'body_fat_pct',  label:'Body Fat',  unit:'%'       },
+    { key:'lean_mass_lbs', label:'Lean Mass', unit:'lb'      },
+    { key:'fat_mass_lbs',  label:'Fat Mass',  unit:'lb'      },
+    { key:'vat_kg',        label:'VAT',       unit:'kg'      },
+    { key:'rmr_cal',       label:'RMR',       unit:'cal/day' },
+  ];
+  const rows = dexa.slice().reverse().map(s => {
+    const cells = fields.map(f => {
+      const v = s[f.key];
+      const d = v!=null ? (f.key==='rmr_cal'?v.toLocaleString():v)+' '+f.unit : '—';
+      const style = f.key==='vat_kg'&&v!=null ? `color:${v<1?'var(--green)':'var(--yellow)'};font-weight:600` : '';
+      return `<td style="${style}">${d}</td>`;
+    }).join('');
+    return `<tr><td>${fmtDateShort(s.date)}</td>${cells}<td style="color:var(--muted)">${s.notes||''}</td></tr>`;
+  }).join('');
+  el.innerHTML = `<table>
+    <thead><tr><th>Date</th><th>Weight</th><th>Body Fat</th><th>Lean Mass</th><th>Fat Mass</th><th>VAT</th><th>RMR</th><th>Notes</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+// ── Labs ──────────────────────────────────────────────────────────────────
+function buildLabs() {
+  const labs = DATA.labs;
+  const el = document.getElementById('labs-content');
+  if (!labs.length) { el.innerHTML = '<p class="empty">No labs yet.</p>'; return; }
+  const lat = labs[labs.length - 1];
+
+  const fields = [
+    { key:'ldl_mgdl',              label:'LDL-C',            unit:'mg/dL',  warn:100, bad:130,  dir:'low'  },
+    { key:'non_hdl_mgdl',          label:'Non-HDL',          unit:'mg/dL',  warn:130, bad:160,  dir:'low'  },
+    { key:'apob_mgdl',             label:'ApoB',             unit:'mg/dL',  warn:80,  bad:100,  dir:'low'  },
+    { key:'lpa_nmol',              label:'Lp(a)',            unit:'nmol/L', warn:75,  bad:125,  dir:'low'  },
+    { key:'total_cholesterol_mgdl',label:'Total Chol',       unit:'mg/dL',  warn:200, bad:240,  dir:'low'  },
+    { key:'hdl_mgdl',              label:'HDL-C',            unit:'mg/dL',  warn:40,  bad:35,   dir:'high' },
+    { key:'triglycerides_mgdl',    label:'Triglycerides',    unit:'mg/dL',  warn:150, bad:200,  dir:'low'  },
+    { key:'hscrp_mgl',             label:'hsCRP',            unit:'mg/L',   warn:1.0, bad:3.0,  dir:'low'  },
+    { key:'glucose_mgdl',          label:'Glucose',          unit:'mg/dL',  warn:100, bad:126,  dir:'low'  },
+    { key:'testosterone_ng_dl',    label:'Testosterone',     unit:'ng/dL',  warn:400, bad:250,  dir:'high' },
+    { key:'alt_ul',                label:'ALT',              unit:'U/L',    warn:40,  bad:55,   dir:'low'  },
+    { key:'psa_ngml',              label:'PSA',              unit:'ng/mL',  warn:2.5, bad:4.0,  dir:'low'  },
+  ];
+
+  function labColor(v, f) {
+    if (v==null) return 'var(--muted)';
+    if (f.dir==='low')  return v<=f.warn?'var(--green)':v<=f.bad?'var(--yellow)':'var(--red)';
+    return v>=f.warn?'var(--green)':v>=f.bad?'var(--yellow)':'var(--red)';
+  }
+  function labFlag(v, f) {
+    if (v==null) return '';
+    if (f.dir==='low')  return v<=f.warn?'':v<=f.bad?' ↑':' ↑↑';
+    return v>=f.warn?'':v>=f.bad?' ↓':' ↓↓';
+  }
+
+  const rows = fields.map(f => {
+    const v = lat[f.key];
+    return `<div class="lab-row">
+      <span class="lab-name">${f.label}</span>
+      <span class="lab-val" style="color:${labColor(v,f)}">${v!=null?v+' '+f.unit+labFlag(v,f):'—'}</span>
+    </div>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div style="font-size:11px;color:var(--muted);margin-bottom:12px">
+      ${lat.date?'Last draw: '+fmtDate(lat.date):''}
+      ${lat.notes?'<br>'+lat.notes:''}
+    </div>${rows}`;
+}
+</script>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-dot">♥</div>
+    HealthTrack
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Overview</div>
+    <div class="nav-item active"><span class="icon">◈</span> Dashboard</div>
+    <div class="nav-item"><span class="icon">◎</span> Goals</div>
+
+    <div class="nav-section-label">Tracking</div>
+    <div class="nav-item"><span class="icon">⊕</span> Nutrition</div>
+    <div class="nav-item"><span class="icon">◷</span> Workouts</div>
+    <div class="nav-item"><span class="icon">◆</span> Body Comp</div>
+
+    <div class="nav-section-label">Medical</div>
+    <div class="nav-item"><span class="icon">◉</span> Labs</div>
+    <div class="nav-item"><span class="icon">◑</span> DEXA Scans</div>
+  </nav>
+  <div class="sidebar-footer">
+    <strong>Matt Lamon</strong>
+    Goal: Dec 31, 2026
+  </div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-title">
+      <h1>Welcome back, Matt 👋</h1>
+      <div class="sub" id="today-date"></div>
+    </div>
+    <div class="topbar-right">
+      <div class="days-pill">
+        <span class="num" id="days-num">—</span>
+        <span class="lbl">days to goal · <span id="goal-date"></span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- Stat Cards -->
+    <div class="stat-grid">
+
+      <!-- Weight -->
+      <div class="stat-card sc-blue">
+        <div class="sc-icon">⚖</div>
+        <div class="sc-label">Weight</div>
+        <div class="sc-value" id="wt-val">—</div>
+        <div class="sc-badge" id="wt-badge">—</div>
+        <div class="sc-bar-bg"><div class="sc-bar-fill" id="wt-bar" style="width:0%;background:linear-gradient(90deg,#4f8ef7,#22d3ee)"></div></div>
+        <div class="sc-meta"><span>Start: 234.5 lb · Goal: 190 lb</span><span id="wt-pct">0%</span></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:5px" id="wt-togo">—</div>
+      </div>
+
+      <!-- Waist -->
+      <div class="stat-card sc-teal">
+        <div class="sc-icon">📏</div>
+        <div class="sc-label">Waist</div>
+        <div class="sc-value" id="waist-val">—</div>
+        <div class="sc-badge" id="waist-badge">—</div>
+        <div class="sc-bar-bg"><div class="sc-bar-fill" id="waist-bar" style="width:0%;background:linear-gradient(90deg,#22d3ee,#67e8f9)"></div></div>
+        <div class="sc-meta"><span>Start: 43" · Goal: ≤37"</span><span id="waist-pct">0%</span></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:5px" id="waist-togo">—</div>
+      </div>
+
+      <!-- VAT -->
+      <div class="stat-card sc-purple">
+        <div class="sc-icon">🧬</div>
+        <div class="sc-label">Visceral Fat (VAT)</div>
+        <div class="sc-value" id="vat-val">—</div>
+        <div class="sc-badge" id="vat-badge">—</div>
+        <div class="sc-bar-bg"><div class="sc-bar-fill" id="vat-bar" style="width:0%;background:linear-gradient(90deg,#a78bfa,#f472b6)"></div></div>
+        <div class="sc-meta"><span>Baseline: 2.07 kg · Goal: &lt;1.0 kg</span><span id="vat-pct">—</span></div>
+      </div>
+
+      <!-- Lean Mass -->
+      <div class="stat-card sc-green">
+        <div class="sc-icon">💪</div>
+        <div class="sc-label">Lean Mass</div>
+        <div class="sc-value" id="lean-val">—</div>
+        <div class="sc-badge" id="lean-badge">—</div>
+        <div class="sc-bar-bg"><div class="sc-bar-fill" style="width:100%;background:linear-gradient(90deg,#34d399,#6ee7b7)"></div></div>
+        <div class="sc-meta"><span>Body Fat: <span id="lean-bf">—</span></span><span>Maintain or increase</span></div>
+      </div>
+
+    </div>
+
+    <!-- Weight Chart + Side Panel -->
+    <div class="row row-2-1">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Weight Trend</div>
+            <div class="panel-sub">vs. goal of 190 lb by Dec 31, 2026</div>
+          </div>
+          <span class="panel-badge">All Time</span>
+        </div>
+        <div class="chart-wrap"><canvas id="weightChart"></canvas></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Vitals & Metrics</div>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Resting HR</span>
+          <span class="metric-val" id="rhr-val" style="color:var(--muted)">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Body Fat %</span>
+          <span class="metric-val" id="bf-val" style="color:var(--muted)">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">RMR (DEXA)</span>
+          <span class="metric-val" id="rmr-val" style="color:var(--muted)">—</span>
+        </div>
+
+        <div class="divider"></div>
+        <div class="panel-title" style="margin-bottom:12px">Secondary Goals</div>
+        <div class="goal-chip"><div class="goal-chip-dot" style="background:var(--red)"></div>Cardiometabolic risk ↓</div>
+        <div class="goal-chip"><div class="goal-chip-dot" style="background:var(--teal)"></div>Sleep quality ↑ · AHI 7.5</div>
+        <div class="goal-chip"><div class="goal-chip-dot" style="background:var(--purple)"></div>AF recurrence prevention</div>
+        <div class="goal-chip"><div class="goal-chip-dot" style="background:var(--accent)"></div>Repatha (PCSK9 inhibitor)</div>
+        <div class="goal-chip"><div class="goal-chip-dot" style="background:var(--yellow)"></div>Hair preservation protocol</div>
+      </div>
+    </div>
+
+    <!-- Nutrition + Workouts -->
+    <div class="row row-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Nutrition Log</div>
+          <span class="panel-badge">Last 7 days</span>
+        </div>
+        <div id="nutrition-content"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Workout Log</div>
+          <span class="panel-badge">Recent</span>
+        </div>
+        <div id="workout-content"></div>
+      </div>
+    </div>
+
+    <!-- Labs + DEXA -->
+    <div class="row row-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Lab Values</div>
+            <div class="panel-sub">Color-coded: green = optimal, yellow = borderline, red = elevated</div>
+          </div>
+          <span class="panel-badge">Jun 2024</span>
+        </div>
+        <div id="labs-content"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">DEXA History</div>
+          <span class="panel-badge">BodySpec</span>
+        </div>
+        <div id="dexa-content"></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:16px 0;color:var(--muted);font-size:11px">
+      To log data, tell Claude: weight, nutrition, workouts, labs, or DEXA results
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
