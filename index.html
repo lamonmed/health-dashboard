@@ -366,6 +366,11 @@ tr:last-child td { border-bottom: none; }
   .row-2 { grid-template-columns: 1fr; }
   .content { padding: 16px; }
 }
+
+/* ── Lab trend grid ── */
+.lab-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 1100px) { .lab-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 720px)  { .lab-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -473,10 +478,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (curRMR)  document.getElementById('rmr-val').textContent = curRMR.toLocaleString() + ' cal/day';
   if (curBodyFat) document.getElementById('bf-val').textContent = curBodyFat.toFixed(1) + '%';
 
+  buildWeeklySnapshot();
   buildWeightChart();
   buildNutrition();
   buildWorkouts();
   buildLabs();
+  buildLabTrends();
   buildDexa();
 });
 
@@ -589,6 +596,13 @@ function buildWeightChart() {
 }
 
 // ── Nutrition ──────────────────────────────────────────────────────────────
+function rollingAvg(rows, field, days) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const cutoff = today.getTime() - (days - 1) * 86400000;
+  const vals = rows.filter(r => r[field] != null &&
+                new Date(r.date + 'T00:00:00').getTime() >= cutoff).map(r => r[field]);
+  return vals.length ? Math.round(vals.reduce((a,b) => a+b, 0) / vals.length) : null;
+}
 function buildNutrition() {
   const n = DATA.nutrition;
   const g = DATA.goals;
@@ -597,9 +611,17 @@ function buildNutrition() {
     el.innerHTML = '<p class="empty">No entries yet — tell Claude to log protein and calories.</p>';
     return;
   }
-  const recent = n.slice(-7).reverse();
+  const sorted = n.slice().sort((a,b) => a.date < b.date ? -1 : 1);
+  const pro7 = rollingAvg(sorted,'protein_g',7), pro30 = rollingAvg(sorted,'protein_g',30);
+  const cal7 = rollingAvg(sorted,'calories',7),  cal30 = rollingAvg(sorted,'calories',30);
+  const proColor = v => v != null && v >= g.protein_g_min ? 'var(--green)' : 'var(--red)';
+  const stat = (label, val, color) => `
+    <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">${label}</div>
+         <div style="font-size:19px;font-weight:700;color:${color || 'var(--text)'}">${val}</div></div>`;
+
+  const recent = sorted.slice(-7).reverse();
   const rows = recent.map(r => {
-    const ok  = r.protein_g >= g.protein_g_min;
+    const ok  = r.protein_g != null && r.protein_g >= g.protein_g_min;
     const cls = r.protein_g == null ? '' : ok ? 'badge-green' : 'badge-red';
     const proDisp = r.protein_g != null
       ? `<span class="badge ${cls}">${r.protein_g}g</span>`
@@ -612,27 +634,75 @@ function buildNutrition() {
     </tr>`;
   }).join('');
 
-  const withPro = n.filter(r => r.protein_g != null);
-  const avgPro  = withPro.length ? Math.round(withPro.reduce((a,b) => a+b.protein_g,0)/withPro.length) : null;
-  const withCal = n.filter(r => r.calories != null);
-  const avgCal  = withCal.length ? Math.round(withCal.reduce((a,b) => a+b.calories,0)/withCal.length) : null;
-
   el.innerHTML = `
-    <div style="display:flex;gap:24px;margin-bottom:16px">
-      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">Avg Protein</div>
-           <div style="font-size:20px;font-weight:700;color:${avgPro!=null&&avgPro>=g.protein_g_min?'var(--green)':'var(--red)'}">${avgPro!=null?avgPro+'g':'—'}</div></div>
-      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">Target</div>
-           <div style="font-size:20px;font-weight:700">≥${g.protein_g_min}g</div></div>
-      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">Avg Calories</div>
-           <div style="font-size:20px;font-weight:700">${avgCal!=null?avgCal+' kcal':'—'}</div></div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:14px">
+      ${stat('Protein · 7-day', pro7!=null?pro7+'g':'—', proColor(pro7))}
+      ${stat('Protein · 30-day', pro30!=null?pro30+'g':'—', proColor(pro30))}
+      ${stat('Target', '≥'+g.protein_g_min+'g')}
+      ${stat('Calories · 7-day', cal7!=null?cal7+' kcal':'—')}
+      ${stat('Calories · 30-day', cal30!=null?cal30+' kcal':'—')}
     </div>
+    <div style="height:140px;margin-bottom:14px"><canvas id="nutritionChart"></canvas></div>
     <table>
       <thead><tr><th>Date</th><th>Calories</th><th>Protein</th><th>Notes</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
+
+  const last14 = sorted.slice(-14);
+  const ctx = document.getElementById('nutritionChart').getContext('2d');
+  new Chart(ctx, {
+    data: {
+      labels: last14.map(r => fmtDateShort(r.date)),
+      datasets: [
+        { type:'bar', label:'Protein (g)', data:last14.map(r => r.protein_g ?? null), yAxisID:'yP',
+          backgroundColor:'rgba(52,211,153,0.5)', borderColor:'#34d399', borderWidth:1, order:2 },
+        { type:'line', label:'Protein target', data:last14.map(() => g.protein_g_min), yAxisID:'yP',
+          borderColor:'rgba(52,211,153,0.55)', borderDash:[4,3], borderWidth:1.5, pointRadius:0, order:1 },
+        { type:'line', label:'Calories', data:last14.map(r => r.calories ?? null), yAxisID:'yC',
+          borderColor:'#fbbf24', backgroundColor:'transparent', borderWidth:2, pointRadius:2, tension:0.3, spanGaps:true, order:0 }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ labels:{ color:'#5a6a9a', font:{size:10}, boxWidth:10, padding:10,
+        filter:i => i.text !== 'Protein target' } } },
+      scales:{
+        x:{ ticks:{ color:'#5a6a9a', font:{size:9}, maxTicksLimit:7 }, grid:{ color:'rgba(255,255,255,0.04)' } },
+        yP:{ position:'left',  beginAtZero:true,  ticks:{ color:'#5a6a9a', font:{size:9} }, grid:{ color:'rgba(255,255,255,0.04)' } },
+        yC:{ position:'right', beginAtZero:false, ticks:{ color:'#5a6a9a', font:{size:9} }, grid:{ drawOnChartArea:false } }
+      }
+    }
+  });
 }
 
 // ── Workouts ──────────────────────────────────────────────────────────────
+// Week starts Monday. A week "qualifies" for the streak if it has >=3 sessions
+// including >=2 resistance (Strength) sessions.
+function weekStartTs(dateStr) {
+  const dt = new Date(dateStr + 'T00:00:00');
+  const dow = (dt.getDay() + 6) % 7;        // Mon=0 … Sun=6
+  dt.setDate(dt.getDate() - dow); dt.setHours(0,0,0,0);
+  return dt.getTime();
+}
+function todayISOlocal() {
+  const t = new Date();
+  return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
+}
+const WORKOUT_COLORS = { Strength:'var(--accent)', Cardio:'var(--green)', Cycling:'var(--teal)',
+  Walking:'var(--yellow)', HIIT:'var(--red)', Yoga:'var(--purple)', Mobility:'var(--pink)' };
+
+function weekStats(workouts) {
+  const weeks = {};
+  workouts.forEach(s => {
+    const k = weekStartTs(s.date);
+    (weeks[k] = weeks[k] || { sessions:0, resistance:0 });
+    weeks[k].sessions++;
+    if (s.type === 'Strength') weeks[k].resistance++;
+  });
+  return weeks;
+}
+const weekQualifies = wk => wk && wk.sessions >= 3 && wk.resistance >= 2;
+
 function buildWorkouts() {
   const w = DATA.workouts;
   const el = document.getElementById('workout-content');
@@ -640,12 +710,30 @@ function buildWorkouts() {
     el.innerHTML = '<p class="empty">No sessions logged yet — tell Claude to log a workout.</p>';
     return;
   }
-  const colors = { Strength:'var(--accent)', Cardio:'var(--green)', Cycling:'var(--teal)', Walking:'var(--yellow)', HIIT:'var(--red)' };
-  const now = new Date();
-  const thisWeek = w.filter(s => (now - new Date(s.date+'T00:00:00')) < 7*86400000).length;
+  const WEEK = 7 * 86400000;
+  const weeks = weekStats(w);
+  const thisWeekTs = weekStartTs(todayISOlocal());
+  const firstTs = Math.min(...Object.keys(weeks).map(Number));
+  const allWeeks = [];
+  for (let t = firstTs; t <= thisWeekTs; t += WEEK) allWeeks.push(t);
+
+  // current streak: consecutive qualifying weeks ending now (current week, if not yet
+  // qualified, doesn't break the streak — it just isn't counted yet).
+  let current = 0;
+  for (let i = allWeeks.length - 1; i >= 0; i--) {
+    if (weekQualifies(weeks[allWeeks[i]])) current++;
+    else if (allWeeks[i] === thisWeekTs) continue;
+    else break;
+  }
+  let longest = 0, run = 0;
+  allWeeks.forEach(t => { if (weekQualifies(weeks[t])) { run++; longest = Math.max(longest, run); } else run = 0; });
+
+  const tw = weeks[thisWeekTs] || { sessions:0, resistance:0 };
+  const twMet = weekQualifies(tw);
+
   const rows = w.slice(-5).reverse().map(s => `
     <div class="workout-item">
-      <div class="workout-dot" style="background:${colors[s.type]||'var(--purple)'}"></div>
+      <div class="workout-dot" style="background:${WORKOUT_COLORS[s.type]||'var(--purple)'}"></div>
       <div style="flex:1">
         <div style="display:flex;align-items:center;gap:8px">
           <span class="workout-type">${s.type}</span>
@@ -656,11 +744,113 @@ function buildWorkouts() {
     </div>`).join('');
 
   el.innerHTML = `
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
-      <div><span style="font-size:28px;font-weight:700;color:var(--accent)">${thisWeek}</span>
-           <span style="font-size:11px;color:var(--muted);margin-left:4px">this week</span></div>
-      <div style="flex:1;border-left:1px solid var(--border);padding-left:12px;font-size:12px;color:var(--muted)">${w.length} total sessions</div>
-    </div>${rows}`;
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px">
+      <div><span style="font-size:28px;font-weight:700;color:${current>0?'var(--green)':'var(--muted)'}">${current}</span>
+           <span style="font-size:11px;color:var(--muted);margin-left:4px">week streak 🔥</span></div>
+      <div style="border-left:1px solid var(--border);padding-left:12px;font-size:12px;color:var(--muted)">
+        Longest: <strong style="color:var(--text)">${longest}</strong><br>${w.length} total sessions</div>
+    </div>
+    <div style="background:var(--surface2);border-radius:10px;padding:10px 12px;margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-size:12px;color:var(--muted)">This week (goal: 3 sessions, 2 resistance)</span>
+        <span class="badge ${twMet?'badge-green':'badge-yellow'}">${twMet?'✓ on track':'in progress'}</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted)">Sessions <strong style="color:var(--text)">${tw.sessions}/3</strong> · Resistance <strong style="color:var(--text)">${tw.resistance}/2</strong></div>
+    </div>
+    ${rows}`;
+}
+
+// ── Weekly snapshot ─────────────────────────────────────────────────────────
+function buildWeeklySnapshot() {
+  const el = document.getElementById('weekly-content');
+  if (!el) return;
+  const bc = DATA.bodyComposition || [], n = DATA.nutrition || [], w = DATA.workouts || [], g = DATA.goals;
+  const tMs = (() => { const d = new Date(); d.setHours(0,0,0,0); return d.getTime(); })();
+
+  const wAvg = (loDays, hiDays) => {
+    const v = bc.filter(r => r.weight_lbs != null).filter(r => {
+      const t = new Date(r.date + 'T00:00:00').getTime();
+      return t > tMs - hiDays*86400000 && t <= tMs - loDays*86400000;
+    }).map(r => r.weight_lbs);
+    return v.length ? v.reduce((a,b)=>a+b,0)/v.length : null;
+  };
+  const cur7 = wAvg(0,7), prev7 = wAvg(7,14);
+  let wTxt = '—', wColor = 'var(--muted)';
+  if (cur7 != null) {
+    wTxt = cur7.toFixed(1) + ' lb';
+    if (prev7 != null) { const d = cur7 - prev7; wColor = d < 0 ? 'var(--green)' : d > 0 ? 'var(--red)' : 'var(--muted)';
+      wTxt += ` (${d>0?'+':''}${d.toFixed(1)})`; }
+  }
+
+  const wkTs = weekStartTs(todayISOlocal());
+  const tw = w.filter(s => weekStartTs(s.date) === wkTs);
+  const twR = tw.filter(s => s.type === 'Strength').length;
+  const met = tw.length >= 3 && twR >= 2;
+
+  const sortedN = n.slice().sort((a,b)=> a.date<b.date?-1:1);
+  const pro7 = rollingAvg(sortedN,'protein_g',7), cal7 = rollingAvg(sortedN,'calories',7);
+  const days = daysUntil(DATA.profile.goalDate);
+
+  const cell = (label, val, color) => `
+    <div style="flex:1;min-width:110px">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">${label}</div>
+      <div style="font-size:18px;font-weight:700;color:${color||'var(--text)'}">${val}</div></div>`;
+  el.innerHTML = `
+    <div style="display:flex;gap:18px;flex-wrap:wrap">
+      ${cell('Weight (7-day)', wTxt, wColor)}
+      ${cell('Workouts', tw.length + ' · ' + twR + ' resist.', met?'var(--green)':'var(--yellow)')}
+      ${cell('Avg Protein (7d)', pro7!=null?pro7+'g':'—', pro7!=null&&pro7>=g.protein_g_min?'var(--green)':'var(--red)')}
+      ${cell('Avg Calories (7d)', cal7!=null?cal7+' kcal':'—')}
+      ${cell('Days to goal', days)}
+    </div>`;
+}
+
+// ── Lab trends ──────────────────────────────────────────────────────────────
+function buildLabTrends() {
+  const el = document.getElementById('lab-trends-content');
+  if (!el) return;
+  const labs = (DATA.labs || []).slice().sort((a,b)=> a.date<b.date?-1:1);
+  const markers = [
+    { key:'ldl_mgdl',           label:'LDL-C',         target:100, dir:'low'  },
+    { key:'apob_mgdl',          label:'ApoB',          target:80,  dir:'low'  },
+    { key:'lpa_nmol',           label:'Lp(a)',         target:75,  dir:'low'  },
+    { key:'hdl_mgdl',           label:'HDL-C',         target:40,  dir:'high' },
+    { key:'triglycerides_mgdl', label:'Triglycerides', target:150, dir:'low'  },
+    { key:'hscrp_mgl',          label:'hsCRP',         target:1.0, dir:'low'  },
+  ];
+  if (!labs.length) { el.innerHTML = '<p class="empty">No labs yet — log a panel to start trends.</p>'; return; }
+  el.innerHTML = markers.map((m,i) => {
+    const latest = [...labs].reverse().find(l => l[m.key] != null);
+    const lv = latest ? latest[m.key] : null;
+    return `<div style="background:var(--surface2);border-radius:10px;padding:12px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px">
+        <span style="font-size:12px;font-weight:600">${m.label}</span>
+        <span style="font-size:13px;font-weight:700">${lv!=null?lv:'—'}</span>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-bottom:6px">target ${m.dir==='low'?'<':'>'}${m.target}</div>
+      <div style="height:84px"><canvas id="labchart-${i}"></canvas></div>
+    </div>`;
+  }).join('');
+
+  const single = labs.length < 2;
+  markers.forEach((m,i) => {
+    const ctx = document.getElementById('labchart-'+i).getContext('2d');
+    new Chart(ctx, {
+      type:'line',
+      data:{ labels: labs.map(l => fmtDateShort(l.date)),
+        datasets:[
+          { label:m.label, data:labs.map(l => l[m.key] ?? null), borderColor:'#4f8ef7',
+            backgroundColor:'transparent', borderWidth:2, pointRadius:single?4:3,
+            pointBackgroundColor:'#4f8ef7', tension:0.3, spanGaps:true },
+          { label:'target', data:labs.map(() => m.target), borderColor:'rgba(52,211,153,0.5)',
+            borderDash:[4,3], borderWidth:1.5, pointRadius:0 }
+        ]},
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ display:false } },
+        scales:{ x:{ ticks:{ color:'#5a6a9a', font:{size:8}, maxTicksLimit:4 }, grid:{ display:false } },
+                 y:{ ticks:{ color:'#5a6a9a', font:{size:8} }, grid:{ color:'rgba(255,255,255,0.04)' } } } }
+    });
+  });
 }
 
 // ── DEXA ──────────────────────────────────────────────────────────────────
@@ -835,6 +1025,15 @@ function buildLabs() {
 
     </div>
 
+    <!-- This Week snapshot -->
+    <div class="panel" style="margin-bottom:20px">
+      <div class="panel-header">
+        <div class="panel-title">This Week</div>
+        <span class="panel-badge" id="week-range">Last 7 days</span>
+      </div>
+      <div id="weekly-content"></div>
+    </div>
+
     <!-- Weight Chart + Side Panel -->
     <div class="row row-2-1">
       <div class="panel">
@@ -879,8 +1078,8 @@ function buildLabs() {
     <div class="row row-2">
       <div class="panel">
         <div class="panel-header">
-          <div class="panel-title">Nutrition Log</div>
-          <span class="panel-badge">Last 7 days</span>
+          <div class="panel-title">Nutrition</div>
+          <span class="panel-badge">7 &amp; 30-day avg</span>
         </div>
         <div id="nutrition-content"></div>
       </div>
@@ -912,6 +1111,18 @@ function buildLabs() {
         </div>
         <div id="dexa-content"></div>
       </div>
+    </div>
+
+    <!-- Lab Trends -->
+    <div class="panel" style="margin-bottom:20px">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">Lab Trends</div>
+          <div class="panel-sub">Cardiometabolic markers over time · dashed line = target</div>
+        </div>
+        <span class="panel-badge">Over time</span>
+      </div>
+      <div id="lab-trends-content" class="lab-grid"></div>
     </div>
 
     <div style="text-align:center;padding:16px 0;color:var(--muted);font-size:11px">
