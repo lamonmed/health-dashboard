@@ -320,7 +320,15 @@
       "notes": ""
     }
   ],
-  "workouts": [],
+  "workouts": [
+    {
+      "date": "2026-06-22",
+      "type": "Strength",
+      "details": "Full-body strength session (push / pull / legs)",
+      "duration_min": null,
+      "notes": ""
+    }
+  ],
   "labs": [
     {
       "date": "2024-06-28",
