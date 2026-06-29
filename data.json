@@ -6,7 +6,7 @@
   "goals": {
     "weight_lbs": {
       "start": 234.5,
-      "target": 190
+      "target": 185
     },
     "waist_inches": {
       "start": 43,
@@ -15,345 +15,58 @@
     "vat_kg": {
       "target": 1
     },
-    "protein_g_min": 160,
-    "protein_g_max": 220
+    "protein_g_min": 148,
+    "protein_g_max": 185
   },
   "bodyComposition": [
-    {
-      "date": "2025-03-11",
-      "weight_lbs": 230.1,
-      "waist_inches": null,
-      "body_fat_pct": 31.9,
-      "lean_mass_lbs": 149.1,
-      "notes": "BodySpec DEXA"
-    },
-    {
-      "date": "2026-01-01",
-      "weight_lbs": 234.5,
-      "waist_inches": 43,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-01-06",
-      "weight_lbs": 230.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-01-10",
-      "weight_lbs": 231.2,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-01-29",
-      "weight_lbs": 229,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-01",
-      "weight_lbs": 229.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-02",
-      "weight_lbs": 229.3,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-05",
-      "weight_lbs": 227.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-13",
-      "weight_lbs": 224.7,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-17",
-      "weight_lbs": 224.2,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-20",
-      "weight_lbs": 222.3,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-21",
-      "weight_lbs": 222.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-01",
-      "weight_lbs": 221.6,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-02",
-      "weight_lbs": 221.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-03",
-      "weight_lbs": 218.7,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-05",
-      "weight_lbs": 220.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-06",
-      "weight_lbs": 222.6,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-09",
-      "weight_lbs": 220.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-11",
-      "weight_lbs": 221.1,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-15",
-      "weight_lbs": 219.3,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-18",
-      "weight_lbs": 211.4,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-25",
-      "weight_lbs": 221.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-29",
-      "weight_lbs": 220.2,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-04-02",
-      "weight_lbs": 216.7,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-04-19",
-      "weight_lbs": 214.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-04-25",
-      "weight_lbs": 219,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-04-28",
-      "weight_lbs": 214.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-05-17",
-      "weight_lbs": 213.7,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-05-19",
-      "weight_lbs": 213.1,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-05-28",
-      "weight_lbs": 213.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-06-02",
-      "weight_lbs": 208.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-06-09",
-      "weight_lbs": 214.3,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-06-16",
-      "weight_lbs": 216.1,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-06-22",
-      "weight_lbs": 213.5,
-      "waist_inches": 40,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-06-27",
-      "weight_lbs": 211.5,
-      "waist_inches": 38,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "self-report"
-    }
+    { "date": "2025-03-11", "weight_lbs": 230.1, "waist_inches": null, "body_fat_pct": 31.9, "lean_mass_lbs": 149.1, "notes": "BodySpec DEXA" },
+    { "date": "2026-01-01", "weight_lbs": 234.5, "waist_inches": 43, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-01-06", "weight_lbs": 230.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-01-10", "weight_lbs": 231.2, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-01-29", "weight_lbs": 229, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-01", "weight_lbs": 229.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-02", "weight_lbs": 229.3, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-05", "weight_lbs": 227.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-13", "weight_lbs": 224.7, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-17", "weight_lbs": 224.2, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-20", "weight_lbs": 222.3, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-21", "weight_lbs": 222.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-01", "weight_lbs": 221.6, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-02", "weight_lbs": 221.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-03", "weight_lbs": 218.7, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-05", "weight_lbs": 220.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-06", "weight_lbs": 222.6, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-09", "weight_lbs": 220.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-11", "weight_lbs": 221.1, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-15", "weight_lbs": 219.3, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-18", "weight_lbs": 211.4, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-25", "weight_lbs": 221.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-29", "weight_lbs": 220.2, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-04-02", "weight_lbs": 216.7, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-04-19", "weight_lbs": 214.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-04-25", "weight_lbs": 219, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-04-28", "weight_lbs": 214.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-05-17", "weight_lbs": 213.7, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-05-19", "weight_lbs": 213.1, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-05-28", "weight_lbs": 213.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-06-02", "weight_lbs": 208.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-06-09", "weight_lbs": 214.3, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-06-16", "weight_lbs": 216.1, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-06-22", "weight_lbs": 213.5, "waist_inches": 40, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-06-27", "weight_lbs": 211.5, "waist_inches": 38, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "self-report" }
   ],
   "dexa": [
-    {
-      "date": "2025-03-11",
-      "weight_lbs": 230.1,
-      "body_fat_pct": 31.9,
-      "lean_mass_lbs": 149.1,
-      "fat_mass_lbs": 73.3,
-      "vat_kg": 2.07,
-      "rmr_cal": 1814,
-      "notes": "BodySpec baseline scan"
-    }
+    { "date": "2025-03-11", "weight_lbs": 230.1, "body_fat_pct": 31.9, "lean_mass_lbs": 149.1, "fat_mass_lbs": 73.3, "vat_kg": 2.07, "rmr_cal": 1814, "notes": "BodySpec baseline scan" }
   ],
   "nutrition": [
-    {
-      "date": "2026-06-27",
-      "calories": 2200,
-      "protein_g": 150,
-      "notes": ""
-    },
-    {
-      "date": "2026-06-28",
-      "calories": 600,
-      "protein_g": 48,
-      "notes": "FINAL (use this; supersedes the 470 cal correction): glazed salmon ~6 oz with white rice ~1 cup"
-    },
-    {
-      "date": "2026-06-29",
-      "calories": 860,
-      "protein_g": 47,
-      "notes": "Lunch: medium chicken burrito bowl — white rice, black beans, light sour cream, guacamole, medium salsa, lettuce. Drink: watermelon agua fresca (sweetened). Combined into single entry to avoid stacking."
-    }
+    { "date": "2026-06-27", "calories": 2200, "protein_g": 150, "notes": "" },
+    { "date": "2026-06-28", "calories": 600, "protein_g": 48, "notes": "FINAL (use this; supersedes the 470 cal correction): glazed salmon ~6 oz with white rice ~1 cup" },
+    { "date": "2026-06-29", "calories": 860, "protein_g": 47, "notes": "Lunch: medium chicken burrito bowl — white rice, black beans, light sour cream, guacamole, medium salsa, lettuce. Drink: watermelon agua fresca (sweetened). Combined into single entry to avoid stacking." }
   ],
   "workouts": [
-    {
-      "date": "2026-06-22",
-      "type": "Strength",
-      "details": "Full-body strength session (push / pull / legs)",
-      "duration_min": null,
-      "notes": ""
-    },
-    {
-      "date": "2026-06-25",
-      "type": "Strength",
-      "details": "Full-body strength session (push / pull / legs) — repeat of Monday",
-      "duration_min": null,
-      "notes": ""
-    },
-    {
-      "date": "2026-06-26",
-      "type": "Strength",
-      "details": "Light yoga and mobility work",
-      "duration_min": null,
-      "notes": ""
-    }
+    { "date": "2026-06-22", "type": "Strength", "details": "Full-body strength session (push / pull / legs)", "duration_min": null, "notes": "" },
+    { "date": "2026-06-25", "type": "Strength", "details": "Full-body strength session (push / pull / legs) — repeat of Monday", "duration_min": null, "notes": "" },
+    { "date": "2026-06-26", "type": "Strength", "details": "Light yoga and mobility work", "duration_min": null, "notes": "" }
   ],
   "labs": [
     {

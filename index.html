@@ -542,7 +542,7 @@ function buildWeightChart() {
           order: 1,
         },
         {
-          label: 'Goal (190 lb)',
+          label: 'Goal (' + DATA.goals.weight_lbs.target + ' lb)',
           data: bc.map(() => DATA.goals.weight_lbs.target),
           borderColor: 'rgba(52,211,153,0.45)',
           borderDash: [5, 4],
@@ -587,7 +587,7 @@ function buildWeightChart() {
         y: {
           ticks: { color: '#5a6a9a', font: { size: 11 } },
           grid: { color: 'rgba(255,255,255,0.04)' },
-          min: Math.min(185, ...weights.filter(Boolean)) - 2,
+          min: Math.min(DATA.goals.weight_lbs.target, ...weights.filter(Boolean)) - 2,
           max: Math.max(...weights.filter(Boolean)) + 3,
         }
       }
@@ -988,7 +988,7 @@ function buildLabs() {
         <div class="sc-value" id="wt-val">—</div>
         <div class="sc-badge" id="wt-badge">—</div>
         <div class="sc-bar-bg"><div class="sc-bar-fill" id="wt-bar" style="width:0%;background:linear-gradient(90deg,#4f8ef7,#22d3ee)"></div></div>
-        <div class="sc-meta"><span>Start: 234.5 lb · Goal: 190 lb</span><span id="wt-pct">0%</span></div>
+        <div class="sc-meta"><span>Start: 234.5 lb · Goal: 185 lb</span><span id="wt-pct">0%</span></div>
         <div style="font-size:11px;color:var(--muted);margin-top:5px" id="wt-togo">—</div>
       </div>
 
@@ -1040,7 +1040,7 @@ function buildLabs() {
         <div class="panel-header">
           <div>
             <div class="panel-title">Weight Trend</div>
-            <div class="panel-sub">vs. goal of 190 lb by Dec 31, 2026</div>
+            <div class="panel-sub">vs. goal of 185 lb by Dec 31, 2026</div>
           </div>
           <span class="panel-badge">All Time</span>
         </div>
