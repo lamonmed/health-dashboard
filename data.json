@@ -298,6 +298,14 @@
       "body_fat_pct": null,
       "lean_mass_lbs": null,
       "notes": "self-report"
+    },
+    {
+      "date": "2026-07-01",
+      "weight_lbs": 212,
+      "waist_inches": null,
+      "body_fat_pct": null,
+      "lean_mass_lbs": null,
+      "notes": "self-report"
     }
   ],
   "dexa": [
