@@ -318,6 +318,16 @@
       "vat_kg": 2.07,
       "rmr_cal": 1814,
       "notes": "BodySpec baseline scan"
+    },
+    {
+      "date": "2026-07-07",
+      "weight_lbs": 214,
+      "body_fat_pct": 25.9,
+      "lean_mass_lbs": 148.7,
+      "fat_mass_lbs": 54.5,
+      "vat_kg": 1.26,
+      "rmr_cal": 1809,
+      "notes": "BodySpec follow-up scan. A/G ratio 1.41 (was 1.49). Android fat 35.8%, Gynoid 24.8%. Bone Z-score 1.4 (93-97th pctile). Total mass per DEXA 210.7 lbs vs intake scale weight 214.0 lbs."
     }
   ],
   "nutrition": [
