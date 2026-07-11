@@ -406,6 +406,23 @@
       "notes": "Quest Diagnostics — ApoB & hsCRP not ordered"
     },
     {
+      "date": "2025-08-05",
+      "total_cholesterol_mgdl": 230,
+      "ldl_mgdl": 155,
+      "non_hdl_mgdl": 192,
+      "hdl_mgdl": 38,
+      "triglycerides_mgdl": 206,
+      "apob_mgdl": null,
+      "lpa_nmol": null,
+      "hscrp_mgl": null,
+      "testosterone_ng_dl": null,
+      "glucose_mgdl": 84,
+      "alt_ul": 55,
+      "ast_ul": 30,
+      "psa_ngml": null,
+      "notes": "ALP 26 (L); Globulin 2.5; A/G ratio 1.9; Total bilirubin 0.8; BUN 16; Creatinine 0.93; eGFR >60; Chol/HDL ratio 6.1 (H)"
+    },
+    {
       "date": "2026-07-10",
       "total_cholesterol_mgdl": 159,
       "ldl_mgdl": 95,
