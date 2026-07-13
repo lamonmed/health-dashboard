@@ -438,6 +438,23 @@
       "ast_ul": 25,
       "psa_ngml": null,
       "notes": "HbA1c 5.2%; eGFR 104; Cr 0.97; BUN 13; Na 138/K 4/Cl 101/CO2 27; Anion gap 10; Ca 9.4; Alb 4.8; ALP 27; Uric acid 6.4; TSH 1.35; Ferritin 204; Serum iron 131; TIBC 349; UIBC 218; TSAT 38%; DHEA-S 185; FSH 3.5; LH 2.5. No testosterone drawn this panel — recommend adding total/free T + SHBG next draw."
+    },
+    {
+      "date": "2026-07-13",
+      "total_cholesterol_mgdl": null,
+      "ldl_mgdl": null,
+      "non_hdl_mgdl": null,
+      "hdl_mgdl": null,
+      "triglycerides_mgdl": null,
+      "apob_mgdl": null,
+      "lpa_nmol": null,
+      "hscrp_mgl": null,
+      "testosterone_ng_dl": 472,
+      "glucose_mgdl": null,
+      "alt_ul": null,
+      "ast_ul": null,
+      "psa_ngml": null,
+      "notes": "SHBG 27 nmol/L (ref 10-50). Albumin, free T, bioavailable T, and Lp(a) still pending/in progress on this panel."
     }
   ],
   "rhr": []
