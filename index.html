@@ -371,131 +371,10 @@ tr:last-child td { border-bottom: none; }
 <body>
 
 <!-- ═══════════════════ DATA ═══════════════════ -->
-<!-- UPDATE THIS BLOCK WHEN LOGGING NEW DATA -->
+<!-- Data now lives in data.json (same folder). This page fetches it at load time,
+     so updating that one file is enough — no more hand-editing this HTML. -->
 <script>
-const DATA = {
-  profile: { name: "Matt", goalDate: "2026-12-31" },
-  goals: {
-    weight_lbs:    { start: 234.5, target: 190 },
-    waist_inches:  { start: 43,  target: 37  },
-    vat_kg:        { target: 1.0 },
-    protein_g_min: 160,
-    protein_g_max: 220
-  },
-  bodyComposition: [
-    { date: "2025-03-11", weight_lbs: 230.1, waist_inches: null, body_fat_pct: 31.9, lean_mass_lbs: 149.1, notes: "BodySpec DEXA" },
-    { date: "2026-01-01", weight_lbs: 234.5, waist_inches: 43,   body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-01-06", weight_lbs: 230.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-01-10", weight_lbs: 231.2, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-01-29", weight_lbs: 229.0, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-02-01", weight_lbs: 229.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-02-02", weight_lbs: 229.3, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-02-05", weight_lbs: 227.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-02-13", weight_lbs: 224.7, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-02-17", weight_lbs: 224.2, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-02-20", weight_lbs: 222.3, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-02-21", weight_lbs: 222.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-01", weight_lbs: 221.6, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-02", weight_lbs: 221.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-03", weight_lbs: 218.7, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-05", weight_lbs: 220.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-06", weight_lbs: 222.6, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-09", weight_lbs: 220.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-11", weight_lbs: 221.1, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-15", weight_lbs: 219.3, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-18", weight_lbs: 211.4, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-25", weight_lbs: 221.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-03-29", weight_lbs: 220.2, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-04-02", weight_lbs: 216.7, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-04-19", weight_lbs: 214.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-04-25", weight_lbs: 219.0, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-04-28", weight_lbs: 214.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-05-17", weight_lbs: 213.7, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-05-19", weight_lbs: 213.1, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-05-28", weight_lbs: 213.8, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-06-02", weight_lbs: 208.5, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-06-09", weight_lbs: 214.3, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-06-16", weight_lbs: 216.1, waist_inches: null, body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-06-22", weight_lbs: 213.5, waist_inches: 40,   body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" },
-    { date: "2026-07-07", weight_lbs: 210.7, waist_inches: null, body_fat_pct: 25.9, lean_mass_lbs: 148.7, notes: "BodySpec DEXA" },
-    { date: "2026-07-13", weight_lbs: null,  waist_inches: 38,   body_fat_pct: null, lean_mass_lbs: null, notes: "Withings" }
-  ],
-  // ⚠️ IMPORTANT: Always APPEND new entries — never replace existing ones.
-  dexa: [
-    { date: "2025-03-11", weight_lbs: 230.1, body_fat_pct: 31.9, lean_mass_lbs: 149.1, fat_mass_lbs: 73.3, vat_kg: 2.07, rmr_cal: 1814, notes: "BodySpec scan 1 — baseline" },
-    { date: "2026-07-07", weight_lbs: 210.7, body_fat_pct: 25.9, lean_mass_lbs: 148.7, fat_mass_lbs: 54.5, vat_kg: 1.26, rmr_cal: 1809, notes: "BodySpec scan 2" }
-  ],
-  nutrition: [
-    // { date: "2026-06-23", calories: null, protein_g: null, notes: "" }
-  ],
-  workouts: [
-    // { date: "2026-06-23", type: "Strength", details: "Upper body", duration_min: 45, notes: "" }
-  ],
-  // ⚠️ IMPORTANT: Always APPEND new entries — never replace existing ones.
-  labs: [
-    {
-      date: "2024-06-28",
-      total_cholesterol_mgdl: 235,
-      ldl_mgdl: 164,
-      non_hdl_mgdl: 201,
-      hdl_mgdl: 34,
-      triglycerides_mgdl: 221,
-      apob_mgdl: null,
-      lpa_nmol: 142,
-      hscrp_mgl: null,
-      hba1c_pct: null,
-      testosterone_ng_dl: 337,
-      glucose_mgdl: 92,
-      alt_ul: 49,
-      ast_ul: 30,
-      psa_ngml: 0.82,
-      tsh_miul: null,
-      uric_acid_mgdl: null,
-      notes: "Quest Diagnostics — ApoB & hsCRP not ordered"
-    },
-    {
-      date: "2025-08-05",
-      total_cholesterol_mgdl: 230,
-      ldl_mgdl: 155,
-      non_hdl_mgdl: 192,
-      hdl_mgdl: 38,
-      triglycerides_mgdl: 206,
-      apob_mgdl: null,
-      lpa_nmol: null,
-      hscrp_mgl: null,
-      hba1c_pct: null,
-      testosterone_ng_dl: null,
-      glucose_mgdl: 84,
-      alt_ul: 55,
-      ast_ul: 30,
-      psa_ngml: null,
-      tsh_miul: null,
-      uric_acid_mgdl: null,
-      notes: "Quest / UCLA Ventura — lipid panel + CMP"
-    },
-    {
-      date: "2026-07-10",
-      total_cholesterol_mgdl: 159,
-      ldl_mgdl: 95,
-      non_hdl_mgdl: 117,
-      hdl_mgdl: 42,
-      triglycerides_mgdl: 123,
-      apob_mgdl: 92,
-      lpa_nmol: null,
-      hscrp_mgl: 0.4,
-      hba1c_pct: 5.2,
-      testosterone_ng_dl: 472,
-      glucose_mgdl: 76,
-      alt_ul: 35,
-      ast_ul: 25,
-      psa_ngml: null,
-      tsh_miul: 1.35,
-      uric_acid_mgdl: 6.4,
-      notes: "Quest / Junction — Lp(a) & free T pending"
-    }
-  ],
-  rhr: []
-};
+let DATA = null;
 </script>
 <!-- ═══════════════════ END DATA ═══════════════════ -->
 
@@ -523,7 +402,18 @@ function fmtDateShort(d) {
 }
 
 // ── Init ─────────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const res = await fetch('./data.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    DATA = await res.json();
+  } catch (err) {
+    document.querySelector('.content').innerHTML =
+      '<div class="panel"><p class="empty">Could not load data.json (' + err.message + '). ' +
+      'Make sure it was pushed alongside this page.</p></div>';
+    return;
+  }
+
   const g  = DATA.goals;
   const bc = DATA.bodyComposition;
 
@@ -556,6 +446,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('wt-togo').textContent   = `${wtLeft} lb to go`;
   document.getElementById('wt-bar').style.width    = wtPct + '%';
   document.getElementById('wt-pct').textContent    = Math.round(wtPct) + '%';
+  document.getElementById('wt-startgoal').textContent = `Start: ${g.weight_lbs.start} lb · Goal: ${g.weight_lbs.target} lb`;
+  document.getElementById('weight-chart-sub').textContent = `vs. goal of ${g.weight_lbs.target} lb by ` +
+    new Date(DATA.profile.goalDate + 'T00:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
 
   // Waist card
   const waistLost = (g.waist_inches.start - curWaist).toFixed(1);
@@ -565,6 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('waist-togo').textContent  = `${waistLeft}" to goal`;
   document.getElementById('waist-bar').style.width   = waistPct + '%';
   document.getElementById('waist-pct').textContent   = Math.round(waistPct) + '%';
+  document.getElementById('waist-startgoal').textContent = `Start: ${g.waist_inches.start}" · Goal: ≤${g.waist_inches.target}"`;
 
   // VAT card
   if (curVAT != null) {
@@ -577,6 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('vat-badge').textContent = 'DEXA needed';
     document.getElementById('vat-pct').textContent   = 'No data';
   }
+  document.getElementById('vat-startgoal').textContent = `Baseline: ${baselineVAT.toFixed(2)} kg · Goal: <${g.vat_kg.target.toFixed ? g.vat_kg.target.toFixed(1) : g.vat_kg.target} kg`;
 
   // Lean mass card
   document.getElementById('lean-val').textContent   = curLeanMass ? curLeanMass + ' lb' : '— lb';
@@ -650,7 +545,7 @@ function buildWeightChart() {
           order: 1,
         },
         {
-          label: 'Goal (190 lb)',
+          label: `Goal (${DATA.goals.weight_lbs.target} lb)`,
           data: bc.map(() => DATA.goals.weight_lbs.target),
           borderColor: 'rgba(52,211,153,0.45)',
           borderDash: [5, 4],
@@ -695,7 +590,7 @@ function buildWeightChart() {
         y: {
           ticks: { color: '#5a6a9a', font: { size: 11 } },
           grid: { color: 'rgba(255,255,255,0.04)' },
-          min: Math.min(185, ...weights.filter(Boolean)) - 2,
+          min: Math.min(DATA.goals.weight_lbs.target, ...weights.filter(Boolean)) - 2,
           max: Math.max(...weights.filter(Boolean)) + 3,
         }
       }
@@ -930,7 +825,7 @@ function buildLabs() {
         <div class="sc-value" id="wt-val">—</div>
         <div class="sc-badge" id="wt-badge">—</div>
         <div class="sc-bar-bg"><div class="sc-bar-fill" id="wt-bar" style="width:0%;background:linear-gradient(90deg,#4f8ef7,#22d3ee)"></div></div>
-        <div class="sc-meta"><span>Start: 234.5 lb · Goal: 190 lb</span><span id="wt-pct">0%</span></div>
+        <div class="sc-meta"><span id="wt-startgoal">—</span><span id="wt-pct">0%</span></div>
         <div style="font-size:11px;color:var(--muted);margin-top:5px" id="wt-togo">—</div>
       </div>
 
@@ -941,7 +836,7 @@ function buildLabs() {
         <div class="sc-value" id="waist-val">—</div>
         <div class="sc-badge" id="waist-badge">—</div>
         <div class="sc-bar-bg"><div class="sc-bar-fill" id="waist-bar" style="width:0%;background:linear-gradient(90deg,#22d3ee,#67e8f9)"></div></div>
-        <div class="sc-meta"><span>Start: 43" · Goal: ≤37"</span><span id="waist-pct">0%</span></div>
+        <div class="sc-meta"><span id="waist-startgoal">—</span><span id="waist-pct">0%</span></div>
         <div style="font-size:11px;color:var(--muted);margin-top:5px" id="waist-togo">—</div>
       </div>
 
@@ -952,7 +847,7 @@ function buildLabs() {
         <div class="sc-value" id="vat-val">—</div>
         <div class="sc-badge" id="vat-badge">—</div>
         <div class="sc-bar-bg"><div class="sc-bar-fill" id="vat-bar" style="width:0%;background:linear-gradient(90deg,#a78bfa,#f472b6)"></div></div>
-        <div class="sc-meta"><span>Baseline: 2.07 kg · Goal: &lt;1.0 kg</span><span id="vat-pct">—</span></div>
+        <div class="sc-meta"><span id="vat-startgoal">—</span><span id="vat-pct">—</span></div>
       </div>
 
       <!-- Lean Mass -->
@@ -973,7 +868,7 @@ function buildLabs() {
         <div class="panel-header">
           <div>
             <div class="panel-title">Weight Trend</div>
-            <div class="panel-sub">vs. goal of 190 lb by Dec 31, 2026</div>
+            <div class="panel-sub" id="weight-chart-sub">vs. goal by Dec 31, 2026</div>
           </div>
           <span class="panel-badge">All Time</span>
         </div>

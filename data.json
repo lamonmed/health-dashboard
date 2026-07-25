@@ -4,478 +4,75 @@
     "goalDate": "2026-12-31"
   },
   "goals": {
-    "weight_lbs": {
-      "start": 234.5,
-      "target": 185
-    },
-    "waist_inches": {
-      "start": 43,
-      "target": 37
-    },
-    "vat_kg": {
-      "target": 1
-    },
+    "weight_lbs": { "start": 234.5, "target": 185 },
+    "waist_inches": { "start": 43, "target": 37 },
+    "vat_kg": { "target": 1 },
     "protein_g_min": 148,
     "protein_g_max": 185
   },
   "bodyComposition": [
-    {
-      "date": "2025-03-11",
-      "weight_lbs": 230.1,
-      "waist_inches": null,
-      "body_fat_pct": 31.9,
-      "lean_mass_lbs": 149.1,
-      "notes": "BodySpec DEXA"
-    },
-    {
-      "date": "2026-01-01",
-      "weight_lbs": 234.5,
-      "waist_inches": 43,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-01-06",
-      "weight_lbs": 230.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-01-10",
-      "weight_lbs": 231.2,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-01-29",
-      "weight_lbs": 229,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-01",
-      "weight_lbs": 229.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-02",
-      "weight_lbs": 229.3,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-05",
-      "weight_lbs": 227.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-13",
-      "weight_lbs": 224.7,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-17",
-      "weight_lbs": 224.2,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-20",
-      "weight_lbs": 222.3,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-02-21",
-      "weight_lbs": 222.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-01",
-      "weight_lbs": 221.6,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-02",
-      "weight_lbs": 221.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-03",
-      "weight_lbs": 218.7,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-05",
-      "weight_lbs": 220.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-06",
-      "weight_lbs": 222.6,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-09",
-      "weight_lbs": 220.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-11",
-      "weight_lbs": 221.1,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-15",
-      "weight_lbs": 219.3,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-18",
-      "weight_lbs": 211.4,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-25",
-      "weight_lbs": 221.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-03-29",
-      "weight_lbs": 220.2,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-04-02",
-      "weight_lbs": 216.7,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-04-19",
-      "weight_lbs": 214.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-04-25",
-      "weight_lbs": 219,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-04-28",
-      "weight_lbs": 214.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-05-17",
-      "weight_lbs": 213.7,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-05-19",
-      "weight_lbs": 213.1,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-05-28",
-      "weight_lbs": 213.8,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-06-02",
-      "weight_lbs": 208.5,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-06-09",
-      "weight_lbs": 214.3,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-06-16",
-      "weight_lbs": 216.1,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-06-22",
-      "weight_lbs": 213.5,
-      "waist_inches": 40,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "Withings"
-    },
-    {
-      "date": "2026-06-27",
-      "weight_lbs": 211.5,
-      "waist_inches": 38,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "self-report"
-    },
-    {
-      "date": "2026-07-01",
-      "weight_lbs": 212,
-      "waist_inches": null,
-      "body_fat_pct": null,
-      "lean_mass_lbs": null,
-      "notes": "self-report"
-    }
+    { "date": "2025-03-11", "weight_lbs": 230.1, "waist_inches": null, "body_fat_pct": 31.9, "lean_mass_lbs": 149.1, "notes": "BodySpec DEXA" },
+    { "date": "2026-01-01", "weight_lbs": 234.5, "waist_inches": 43, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-01-06", "weight_lbs": 230.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-01-10", "weight_lbs": 231.2, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-01-29", "weight_lbs": 229, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-01", "weight_lbs": 229.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-02", "weight_lbs": 229.3, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-05", "weight_lbs": 227.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-13", "weight_lbs": 224.7, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-17", "weight_lbs": 224.2, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-20", "weight_lbs": 222.3, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-02-21", "weight_lbs": 222.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-01", "weight_lbs": 221.6, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-02", "weight_lbs": 221.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-03", "weight_lbs": 218.7, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-05", "weight_lbs": 220.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-06", "weight_lbs": 222.6, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-09", "weight_lbs": 220.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-11", "weight_lbs": 221.1, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-15", "weight_lbs": 219.3, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-18", "weight_lbs": 211.4, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-25", "weight_lbs": 221.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-03-29", "weight_lbs": 220.2, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-04-02", "weight_lbs": 216.7, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-04-19", "weight_lbs": 214.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-04-25", "weight_lbs": 219, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-04-28", "weight_lbs": 214.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-05-17", "weight_lbs": 213.7, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-05-19", "weight_lbs": 213.1, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-05-28", "weight_lbs": 213.8, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-06-02", "weight_lbs": 208.5, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-06-09", "weight_lbs": 214.3, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-06-16", "weight_lbs": 216.1, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-06-22", "weight_lbs": 213.5, "waist_inches": 40, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Withings" },
+    { "date": "2026-06-27", "weight_lbs": 211.5, "waist_inches": 38, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "self-report" },
+    { "date": "2026-07-01", "weight_lbs": 212, "waist_inches": null, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "self-report" },
+    { "date": "2026-07-25", "weight_lbs": 214, "waist_inches": 38, "body_fat_pct": null, "lean_mass_lbs": null, "notes": "Confirmed by Matt in chat" }
   ],
   "dexa": [
-    {
-      "date": "2025-03-11",
-      "weight_lbs": 230.1,
-      "body_fat_pct": 31.9,
-      "lean_mass_lbs": 149.1,
-      "fat_mass_lbs": 73.3,
-      "vat_kg": 2.07,
-      "rmr_cal": 1814,
-      "notes": "BodySpec baseline scan"
-    },
-    {
-      "date": "2026-07-07",
-      "weight_lbs": 214,
-      "body_fat_pct": 25.9,
-      "lean_mass_lbs": 148.7,
-      "fat_mass_lbs": 54.5,
-      "vat_kg": 1.26,
-      "rmr_cal": 1809,
-      "notes": "BodySpec follow-up scan. A/G ratio 1.41 (was 1.49). Android fat 35.8%, Gynoid 24.8%. Bone Z-score 1.4 (93-97th pctile). Total mass per DEXA 210.7 lbs vs intake scale weight 214.0 lbs."
-    }
+    { "date": "2025-03-11", "weight_lbs": 230.1, "body_fat_pct": 31.9, "lean_mass_lbs": 149.1, "fat_mass_lbs": 73.3, "vat_kg": 2.07, "rmr_cal": 1814, "notes": "BodySpec baseline scan" },
+    { "date": "2026-07-07", "weight_lbs": 214, "body_fat_pct": 25.9, "lean_mass_lbs": 148.7, "fat_mass_lbs": 54.5, "vat_kg": 1.26, "rmr_cal": 1809, "notes": "BodySpec follow-up scan. A/G ratio 1.41 (was 1.49). Android fat 35.8%, Gynoid 24.8%. Bone Z-score 1.4 (93-97th pctile). Total mass per DEXA 210.7 lbs vs intake scale weight 214.0 lbs." }
   ],
   "nutrition": [
-    {
-      "date": "2026-06-27",
-      "calories": 2200,
-      "protein_g": 150,
-      "notes": ""
-    },
-    {
-      "date": "2026-06-28",
-      "calories": 600,
-      "protein_g": 48,
-      "notes": "FINAL (use this; supersedes the 470 cal correction): glazed salmon ~6 oz with white rice ~1 cup"
-    },
-    {
-      "date": "2026-06-29",
-      "calories": 450,
-      "protein_g": 5,
-      "notes": "Evening snack: bowl of frozen mixed berries (~1 cup), generous Cool Whip (~1/2 cup), 2 servings Boom Chicka Pop kettle corn. Single combined entry."
-    },
-    {
-      "date": "2026-07-24",
-      "calories": 1420,
-      "protein_g": 71,
-      "notes": "Breakfast: toast with avocado and scrambled egg. Lunch: peanut butter and jelly sandwich. Dinner: roasted chicken thigh, roasted potatoes, meat salad."
-    }
+    { "date": "2026-06-27", "calories": 2200, "protein_g": 150, "notes": "" },
+    { "date": "2026-06-28", "calories": 600, "protein_g": 48, "notes": "FINAL (use this; supersedes the 470 cal correction): glazed salmon ~6 oz with white rice ~1 cup" },
+    { "date": "2026-06-29", "calories": 450, "protein_g": 5, "notes": "Evening snack: bowl of frozen mixed berries (~1 cup), generous Cool Whip (~1/2 cup), 2 servings Boom Chicka Pop kettle corn. Single combined entry." },
+    { "date": "2026-07-24", "calories": 1420, "protein_g": 71, "notes": "Breakfast: toast with avocado and scrambled egg. Lunch: peanut butter and jelly sandwich. Dinner: roasted chicken thigh, roasted potatoes, meat salad." }
   ],
   "workouts": [
-    {
-      "date": "2026-06-22",
-      "type": "Strength",
-      "details": "Full-body strength session (push / pull / legs)",
-      "duration_min": null,
-      "notes": ""
-    },
-    {
-      "date": "2026-06-25",
-      "type": "Strength",
-      "details": "Full-body strength session (push / pull / legs) — repeat of Monday",
-      "duration_min": null,
-      "notes": ""
-    },
-    {
-      "date": "2026-06-26",
-      "type": "Strength",
-      "details": "Light yoga and mobility work",
-      "duration_min": null,
-      "notes": ""
-    },
-    {
-      "date": "2026-06-29",
-      "type": "Strength",
-      "details": "",
-      "duration_min": null,
-      "notes": ""
-    },
-    {
-      "date": "2026-07-06",
-      "type": "Strength",
-      "details": "Home bodyweight resistance workout",
-      "duration_min": null,
-      "notes": ""
-    },
-    {
-      "date": "2026-07-23",
-      "type": "Strength",
-      "details": "Total body resistance workout",
-      "duration_min": null,
-      "notes": ""
-    },
-    {
-      "date": "2026-07-23",
-      "type": "Strength",
-      "details": "",
-      "duration_min": null,
-      "notes": "Total body strength workout."
-    }
+    { "date": "2026-06-22", "type": "Strength", "details": "Full-body strength session (push / pull / legs)", "duration_min": null, "notes": "" },
+    { "date": "2026-06-25", "type": "Strength", "details": "Full-body strength session (push / pull / legs) — repeat of Monday", "duration_min": null, "notes": "" },
+    { "date": "2026-06-26", "type": "Strength", "details": "Light yoga and mobility work", "duration_min": null, "notes": "" },
+    { "date": "2026-06-29", "type": "Strength", "details": "", "duration_min": null, "notes": "" },
+    { "date": "2026-07-06", "type": "Strength", "details": "Home bodyweight resistance workout", "duration_min": null, "notes": "" },
+    { "date": "2026-07-23", "type": "Strength", "details": "Total body resistance workout", "duration_min": null, "notes": "" },
+    { "date": "2026-07-23", "type": "Strength", "details": "", "duration_min": null, "notes": "Total body strength workout." }
   ],
   "labs": [
-    {
-      "date": "2024-06-28",
-      "total_cholesterol_mgdl": 235,
-      "ldl_mgdl": 164,
-      "non_hdl_mgdl": 201,
-      "hdl_mgdl": 34,
-      "triglycerides_mgdl": 221,
-      "apob_mgdl": null,
-      "lpa_nmol": 142,
-      "hscrp_mgl": null,
-      "testosterone_ng_dl": 337,
-      "glucose_mgdl": 92,
-      "alt_ul": 49,
-      "ast_ul": 30,
-      "psa_ngml": 0.82,
-      "notes": "Quest Diagnostics — ApoB & hsCRP not ordered"
-    },
-    {
-      "date": "2025-08-05",
-      "total_cholesterol_mgdl": 230,
-      "ldl_mgdl": 155,
-      "non_hdl_mgdl": 192,
-      "hdl_mgdl": 38,
-      "triglycerides_mgdl": 206,
-      "apob_mgdl": null,
-      "lpa_nmol": null,
-      "hscrp_mgl": null,
-      "testosterone_ng_dl": null,
-      "glucose_mgdl": 84,
-      "alt_ul": 55,
-      "ast_ul": 30,
-      "psa_ngml": null,
-      "notes": "ALP 26 (L); Globulin 2.5; A/G ratio 1.9; Total bilirubin 0.8; BUN 16; Creatinine 0.93; eGFR >60; Chol/HDL ratio 6.1 (H)"
-    },
-    {
-      "date": "2026-07-10",
-      "total_cholesterol_mgdl": 159,
-      "ldl_mgdl": 95,
-      "non_hdl_mgdl": 117,
-      "hdl_mgdl": 42,
-      "triglycerides_mgdl": 123,
-      "apob_mgdl": null,
-      "lpa_nmol": null,
-      "hscrp_mgl": null,
-      "testosterone_ng_dl": null,
-      "glucose_mgdl": 76,
-      "alt_ul": 35,
-      "ast_ul": 25,
-      "psa_ngml": null,
-      "notes": "HbA1c 5.2%; eGFR 104; Cr 0.97; BUN 13; Na 138/K 4/Cl 101/CO2 27; Anion gap 10; Ca 9.4; Alb 4.8; ALP 27; Uric acid 6.4; TSH 1.35; Ferritin 204; Serum iron 131; TIBC 349; UIBC 218; TSAT 38%; DHEA-S 185; FSH 3.5; LH 2.5. No testosterone drawn this panel — recommend adding total/free T + SHBG next draw."
-    },
-    {
-      "date": "2026-07-13",
-      "total_cholesterol_mgdl": null,
-      "ldl_mgdl": null,
-      "non_hdl_mgdl": null,
-      "hdl_mgdl": null,
-      "triglycerides_mgdl": null,
-      "apob_mgdl": null,
-      "lpa_nmol": null,
-      "hscrp_mgl": null,
-      "testosterone_ng_dl": 472,
-      "glucose_mgdl": null,
-      "alt_ul": null,
-      "ast_ul": null,
-      "psa_ngml": null,
-      "notes": "SHBG 27 nmol/L (ref 10-50). Albumin 4.8 g/dL (ref 3.6-5.1). Free testosterone 72.6 pg/mL (ref 46.0-224.0). Bioavailable testosterone 158.8 ng/dL (ref 110.0-575.0). Uric acid 6.4 mg/dL (ref 4.0-8.0). Lp(a) still pending on this panel."
-    }
+    { "date": "2024-06-28", "total_cholesterol_mgdl": 235, "ldl_mgdl": 164, "non_hdl_mgdl": 201, "hdl_mgdl": 34, "triglycerides_mgdl": 221, "apob_mgdl": null, "lpa_nmol": 142, "hscrp_mgl": null, "testosterone_ng_dl": 337, "glucose_mgdl": 92, "alt_ul": 49, "ast_ul": 30, "psa_ngml": 0.82, "notes": "Quest Diagnostics — ApoB & hsCRP not ordered" },
+    { "date": "2025-08-05", "total_cholesterol_mgdl": 230, "ldl_mgdl": 155, "non_hdl_mgdl": 192, "hdl_mgdl": 38, "triglycerides_mgdl": 206, "apob_mgdl": null, "lpa_nmol": null, "hscrp_mgl": null, "testosterone_ng_dl": null, "glucose_mgdl": 84, "alt_ul": 55, "ast_ul": 30, "psa_ngml": null, "notes": "ALP 26 (L); Globulin 2.5; A/G ratio 1.9; Total bilirubin 0.8; BUN 16; Creatinine 0.93; eGFR >60; Chol/HDL ratio 6.1 (H)" },
+    { "date": "2026-07-10", "total_cholesterol_mgdl": 159, "ldl_mgdl": 95, "non_hdl_mgdl": 117, "hdl_mgdl": 42, "triglycerides_mgdl": 123, "apob_mgdl": null, "lpa_nmol": null, "hscrp_mgl": null, "testosterone_ng_dl": null, "glucose_mgdl": 76, "alt_ul": 35, "ast_ul": 25, "psa_ngml": null, "notes": "HbA1c 5.2%; eGFR 104; Cr 0.97; BUN 13; Na 138/K 4/Cl 101/CO2 27; Anion gap 10; Ca 9.4; Alb 4.8; ALP 27; Uric acid 6.4; TSH 1.35; Ferritin 204; Serum iron 131; TIBC 349; UIBC 218; TSAT 38%; DHEA-S 185; FSH 3.5; LH 2.5. No testosterone drawn this panel — recommend adding total/free T + SHBG next draw." },
+    { "date": "2026-07-13", "total_cholesterol_mgdl": null, "ldl_mgdl": null, "non_hdl_mgdl": null, "hdl_mgdl": null, "triglycerides_mgdl": null, "apob_mgdl": null, "lpa_nmol": null, "hscrp_mgl": null, "testosterone_ng_dl": 472, "glucose_mgdl": null, "alt_ul": null, "ast_ul": null, "psa_ngml": null, "notes": "SHBG 27 nmol/L (ref 10-50). Albumin 4.8 g/dL (ref 3.6-5.1). Free testosterone 72.6 pg/mL (ref 46.0-224.0). Bioavailable testosterone 158.8 ng/dL (ref 110.0-575.0). Uric acid 6.4 mg/dL (ref 4.0-8.0). Lp(a) still pending on this panel." }
   ],
   "rhr": []
 }
