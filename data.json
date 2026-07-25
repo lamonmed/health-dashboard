@@ -7,8 +7,8 @@
     "weight_lbs": { "start": 234.5, "target": 185 },
     "waist_inches": { "start": 43, "target": 37 },
     "vat_kg": { "target": 1 },
-    "protein_g_min": 148,
-    "protein_g_max": 185
+    "protein_g_min": 150,
+    "protein_g_max": 150
   },
   "bodyComposition": [
     { "date": "2025-03-11", "weight_lbs": 230.1, "waist_inches": null, "body_fat_pct": 31.9, "lean_mass_lbs": 149.1, "notes": "BodySpec DEXA" },

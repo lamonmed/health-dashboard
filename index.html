@@ -419,8 +419,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const curWeight   = latest(bc, 'weight_lbs')   ?? g.weight_lbs.start;
   const curWaist    = latest(bc, 'waist_inches')  ?? g.waist_inches.start;
-  const curBodyFat  = latest(bc, 'body_fat_pct');
-  const curLeanMass = latest(bc, 'lean_mass_lbs');
+  const curBodyFat  = latest(DATA.dexa, 'body_fat_pct');
+  const curLeanMass = latest(DATA.dexa, 'lean_mass_lbs');
   const curVAT      = latest(DATA.dexa, 'vat_kg');
   const baselineVAT = DATA.dexa.length ? DATA.dexa[0].vat_kg : 2.0;
   const curRHR      = latest(DATA.rhr, 'bpm');
