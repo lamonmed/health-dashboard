@@ -398,6 +398,13 @@
       "details": "Total body resistance workout",
       "duration_min": null,
       "notes": ""
+    },
+    {
+      "date": "2026-07-23",
+      "type": "Strength",
+      "details": "",
+      "duration_min": null,
+      "notes": "Total body strength workout."
     }
   ],
   "labs": [
